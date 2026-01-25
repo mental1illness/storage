@@ -242,10 +242,6 @@ do
 		self:LoadDefault()
 	end
 
-	function ThemeManager:SetLibrary(Library)
-		self.Library = Library
-	end
-
 	function ThemeManager:SaveDefault(Theme)
 		if Theme == nil or Theme == "" then
 			return self.Library:Notification("[ThemeManager]: Invalid Selection.", Color3.fromRGB(255, 0, 0), 3)
@@ -348,14 +344,67 @@ do
 		self.Library:Notification(string.format("[ThemeManager]: Deleted Theme %q", Name), "Accent", 3)
 	end
 
+	function ThemeManager:ReloadCustomThemes()
+		local List = listfiles(self.Folder)
+		local Output = {}
+
+		for i = 1, #List do
+			local File = List[i]
+
+			if File:sub(-5) == ".json" then
+				local Position = File:find(".json", 1, true)
+				local Start = Position
+				local Character = File:sub(Position, Position)
+
+				while Character ~= "/" and Character ~= "\\" and Character ~= "" do
+					Position = Position - 1
+					Character = File:sub(Position, Position)
+				end
+
+				if Character == "/" or Character == "\\" then
+					table.insert(Output, File:sub(Position + 1, Start - 1))
+				end
+			end
+		end
+
+		return Output
+	end
+
+	function ThemeManager:SetLibrary(Library)
+		self.Library = Library
+	end
+
+	function ThemeManager:BuildFolderTree()
+		local Directorys = {}
+
+		self.Folder:gsub("([^/]+)", function(Directory)
+			table.insert(Directorys, Directory)
+		end)
+
+		for _, Directory in next, Directorys do
+			local Directory = table.concat(Directorys, "/", 1, _)
+
+			if isfolder(Directory) then
+				continue
+			end
+
+			makefolder(Directory)
+		end
+	end
+
+	function ThemeManager:SetFolder(Folder)
+		self.Folder = Folder
+		self:BuildFolderTree()
+	end
+
 	function ThemeManager:BuildThemeSection(Tab)
 		assert(self.Library, "Must set ThemeManager.Library first!")
 
-		local Themes = Tab:Section({ Title = "themes", Side = "LEFT" })
+		local Themes = Tab:Section({ Title = "Themes", Side = "LEFT" })
 		for _, Name in next, Indexes do
-			Themes:Label({ Text = string.lower(Name) }):Colorpicker({
+			Themes:Label({ Text = Name }):Colorpicker({
 				Color = self.Library.Theme[Name],
-				Flag = string.lower(Name),
+				Flag = Name,
 				Callback = function()
 					self:ThemeUpdate()
 				end,
@@ -365,95 +414,100 @@ do
 		local ThemesArray = {}
 
 		for Name, Theme in next, self.Presets do
-			table.insert(ThemesArray, string.lower(Name))
+			table.insert(ThemesArray, Name)
 		end
 
 		table.sort(ThemesArray, function(A, B)
-			return self.Presets[string.upper(A)][1] < self.Presets[string.upper(B)][1]
+			return self.Presets[A][1] < self.Presets[B][1]
 		end)
 
 		Themes:Dropdown({
-			Text = "built in themes",
-			Flag = "thememanagerbuiltlist",
+			Text = "Built In Themes",
+			Flag = "ThemeManagerBuiltList",
 			Options = ThemesArray,
 			Current = { ThemesArray[1] },
 			Minimum = 1,
 			Maximum = 1,
+
 			Callback = function(A)
 				self:ApplyTheme(A[1])
 			end,
 		})
 
 		Themes:Dropdown({
-			Text = "custom themes list",
-			Flag = "thememanagercustomthemelist",
+			Text = "Custom Themes List",
+			Flag = "ThemeManagerCustomThemeList",
+
 			Current = {},
 			Options = self:ReloadCustomThemes(),
+
 			Minimum = 1,
 			Maximum = 1,
 		})
 
 		Themes:TextBox({
 			Text = "",
-			Placeholder = "custom theme name",
-			Flag = "thememanagercustomthemename",
+			Placeholder = "Custom Theme Name",
+			Flag = "ThemeManagerCustomThemeName",
 		})
 
 		Themes:Button({
-			Text = "create",
-			Result = "created",
+			Text = "CREATE",
+			Result = "CREATED",
 			Callback = function()
-				self:SaveCustomTheme(TextBoxes["thememanagercustomthemename"]["Text"])
-				Dropdowns["thememanagercustomthemelist"]:Values(self:ReloadCustomThemes())
-				Dropdowns["thememanagercustomthemelist"]:Set({})
+				self:SaveCustomTheme(TextBoxes["ThemeManagerCustomThemeName"]["Text"])
+
+				Dropdowns["ThemeManagerCustomThemeList"]:Values(self:ReloadCustomThemes())
+				Dropdowns["ThemeManagerCustomThemeList"]:Set({})
 			end,
 		}):Button({
-			Text = "delete",
-			Result = "deleted",
+			Text = "DELETE",
+			Result = "DELETED",
 			Callback = function()
-				self:DeleteCustomTheme(Dropdowns["thememanagercustomthemelist"]["Current"][1])
-				Dropdowns["thememanagercustomthemelist"]:Values(self:ReloadCustomThemes())
-				Dropdowns["thememanagercustomthemelist"]:Set({})
+				self:DeleteCustomTheme(Dropdowns["ThemeManagerCustomThemeList"]["Current"][1])
+
+				Dropdowns["ThemeManagerCustomThemeList"]:Values(self:ReloadCustomThemes())
+				Dropdowns["ThemeManagerCustomThemeList"]:Set({})
 			end,
 		})
 
 		Themes:Button({
-			Text = "load",
-			Result = "loaded",
+			Text = "LOAD",
+			Result = "LOADED",
 			Callback = function()
-				self:ApplyTheme(Dropdowns["thememanagercustomthemelist"]["Current"][1], true)
+				self:ApplyTheme(Dropdowns["ThemeManagerCustomThemeList"]["Current"][1], true)
 			end,
 		}):Button({
-			Text = "overwrite",
-			Result = "overwrited",
+			Text = "OVERWRITE",
+			Result = "OVERWRITED",
 			Callback = function()
-				self:OverrideCustomTheme(Dropdowns["thememanagercustomthemelist"]["Current"][1])
+				self:OverrideCustomTheme(Dropdowns["ThemeManagerCustomThemeList"]["Current"][1])
 			end,
 		})
 
 		Themes:Button({
-			Text = "save default",
-			Result = "done",
+			Text = "SAVE DEFAULT",
+			Result = "DONE",
 			Callback = function()
 				self:SaveDefault(
-					Dropdowns["thememanagercustomthemelist"]["Current"][1]
-						or Dropdowns["thememanagerbuiltlist"]["Current"][1]
+					Dropdowns["ThemeManagerCustomThemeList"]["Current"][1]
+						or Dropdowns["ThemeManagerBuiltList"]["Current"][1]
 				)
 			end,
 		}):Button({
-			Text = "remove default",
-			Result = "done",
+			Text = "REMOVE DEFAULT",
+			Result = "DONE",
 			Callback = function()
 				self:RemoveDefault()
 			end,
 		})
 
 		Themes:Button({
-			Text = "refresh list",
-			Result = "refreshed",
+			Text = "REFRESH LIST",
+			Result = "REFRESHED",
 			Callback = function()
-				Dropdowns["thememanagercustomthemelist"]:Values(self:ReloadCustomThemes())
-				Dropdowns["thememanagercustomthemelist"]:Set({})
+				Dropdowns["ThemeManagerCustomThemeList"]:Values(self:ReloadCustomThemes())
+				Dropdowns["ThemeManagerCustomThemeList"]:Set({})
 			end,
 		})
 	end
@@ -462,4 +516,3 @@ end
 getgenv().ThemeManager = ThemeManager
 
 return ThemeManager
-
