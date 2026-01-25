@@ -2728,8 +2728,8 @@ do
 
 		local Title = Functions["Create"]("TextLabel", {
 			Parent = MainFrameHolder,
-			Text = string.upper(Properties.Name),
-			Position = UDim2.new(0.5, 0, 0.015, 0),
+			Text = Properties.Name,
+			Position = UDim2.new(0.5, 0, 0.017, 0),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			TextSize = 12,
 			FontFace = CustomFont,
@@ -4046,5 +4046,4 @@ do
 end
 
 getgenv().Library = Library
-
 return Library
