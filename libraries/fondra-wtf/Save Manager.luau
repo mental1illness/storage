@@ -342,69 +342,73 @@ do
 			"ThemeManagerCustomThemeList", "ThemeManagerCustomThemeName",
 			"SaveManagerConfigList", "SaveManagerConfigName",
 		})
-		local Config = Tab:Section({ Title = "Config", Side = "RIGHT" })
+	
+		local Config = Tab:Section({ Title = "config", Side = "RIGHT" })
+	
 		Config:TextBox({
 			Text = "",
-			Placeholder = "Config Name",
+			Placeholder = "config name",
 			Flag = "SaveManagerConfigName",
 		})
+	
 		Config:Dropdown({
-			Text = "Config List",
+			Text = "config list",
 			Flag = "SaveManagerConfigList",
 			Options = self:GetConfigList(),
 			Current = {},
 			Minimum = 0,
 			Maximum = 1,
 		})
+	
 		Config:Button({
-			Text = "CREATE",
-			Result = "CREATED",
+			Text = "create",
+			Result = "created",
 			Callback = function()
 				self:SaveConfig(TextBoxes["SaveManagerConfigName"].Text)
 				Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
 				Dropdowns["SaveManagerConfigList"]:Set({})
 			end,
+		}):Button({
+			Text = "delete",
+			Result = "deleted",
+			Callback = function()
+				self:DeleteConfig(Dropdowns["SaveManagerConfigList"].Current[1])
+				Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
+				Dropdowns["SaveManagerConfigList"]:Set({})
+			end,
 		})
-			:Button({
-				Text = "DELETE",
-				Result = "DELETED",
-				Callback = function()
-					self:DeleteConfig(Dropdowns["SaveManagerConfigList"].Current[1])
-					Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
-					Dropdowns["SaveManagerConfigList"]:Set({})
-				end,
-			})
+	
 		Config:Button({
-			Text = "LOAD",
-			Result = "LOADED",
+			Text = "load",
+			Result = "loaded",
 			Callback = function()
 				self:LoadConfig(Dropdowns["SaveManagerConfigList"].Current[1], true)
 			end,
+		}):Button({
+			Text = "overwrite",
+			Result = "overwrited",
+			Callback = function()
+				self:OverrideConfig(Dropdowns["SaveManagerConfigList"].Current[1])
+			end,
 		})
-			:Button({
-				Text = "OVERWRITE",
-				Result = "OVERWRITED",
-				Callback = function()
-					self:OverrideConfig(Dropdowns["SaveManagerConfigList"].Current[1])
-				end,
-			})
+	
 		Config:Button({
-			Text = "SAVE DEFAULT",
-			Result = "DONE",
+			Text = "save default",
+			Result = "done",
 			Callback = function()
 				self:SaveDefault(Dropdowns["SaveManagerConfigList"].Current[1])
 			end,
+		}):Button({
+			Text = "remove default",
+			Result = "done",
+			Callback = function()
+				self:RemoveDefault()
+			end,
 		})
-			:Button({
-				Text = "REMOVE DEFAULT",
-				Result = "DONE",
-				Callback = function()
-					self:RemoveDefault()
-				end,
-			})
+	
 		Config:Button({
-			Text = "REFRESH LIST",
-			Result = "REFRESHED",
+			Text = "refresh list",
+			Result = "refreshed",
 			Callback = function()
 				Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
 				Dropdowns["SaveManagerConfigList"]:Set({})
@@ -416,3 +420,4 @@ end
 getgenv().SaveManager = SaveManager
 
 return SaveManager
+
