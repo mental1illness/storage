@@ -242,6 +242,10 @@ do
 		self:LoadDefault()
 	end
 
+	function ThemeManager:SetLibrary(Library)
+		self.Library = Library
+	end
+
 	function ThemeManager:SaveDefault(Theme)
 		if Theme == nil or Theme == "" then
 			return self.Library:Notification("[ThemeManager]: Invalid Selection.", Color3.fromRGB(255, 0, 0), 3)
@@ -458,3 +462,4 @@ end
 getgenv().ThemeManager = ThemeManager
 
 return ThemeManager
+
