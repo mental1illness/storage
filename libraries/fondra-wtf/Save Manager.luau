@@ -334,85 +334,93 @@ do
 
 	function SaveManager:BuildConfigSection(Tab)
 		self:SetIgnoreIndexes({
-			"Accent", "Background 1", "Background 2", "Background 3",
-			"Border 1", "Border 2", "Border 3", "Selected Tab",
-			"Unselected Tab", "Selected Section", "Unselected Section",
-			"Section Background", "Option Background", "Active Text",
-			"Inactive Text", "Warning Text", "ThemeManagerBuiltList",
-			"ThemeManagerCustomThemeList", "ThemeManagerCustomThemeName",
-			"SaveManagerConfigList", "SaveManagerConfigName",
+			"accent", "background 1", "background 2", "background 3",
+			"border 1", "border 2", "border 3", "selected tab",
+			"unselected tab", "selected section", "unselected section",
+			"section background", "option background", "active text",
+			"inactive text", "warning text", "thememanagerbuiltlist",
+			"thememanagercustomthemelist", "thememanagercustomthemename",
+			"savemanagerconfiglist", "savemanagerconfigname",
 		})
-		local Config = Tab:Section({ Title = "Config", Side = "RIGHT" })
+	
+		local Config = Tab:Section({ Title = "config", Side = "RIGHT" })
+	
 		Config:TextBox({
 			Text = "",
-			Placeholder = "Config Name",
-			Flag = "SaveManagerConfigName",
+			Placeholder = "config name",
+			Flag = "savemanagerconfigname",
 		})
+	
 		Config:Dropdown({
-			Text = "Config List",
-			Flag = "SaveManagerConfigList",
+			Text = "config list",
+			Flag = "savemanagerconfiglist",
 			Options = self:GetConfigList(),
 			Current = {},
 			Minimum = 0,
 			Maximum = 1,
 		})
+	
 		Config:Button({
-			Text = "CREATE",
-			Result = "CREATED",
+			Text = "create",
+			Result = "created",
 			Callback = function()
-				self:SaveConfig(TextBoxes["SaveManagerConfigName"].Text)
-				Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
-				Dropdowns["SaveManagerConfigList"]:Set({})
+				self:SaveConfig(TextBoxes["savemanagerconfigname"].Text)
+				Dropdowns["savemanagerconfiglist"]:Values(self:GetConfigList())
+				Dropdowns["savemanagerconfiglist"]:Set({})
 			end,
 		})
-			:Button({
-				Text = "DELETE",
-				Result = "DELETED",
-				Callback = function()
-					self:DeleteConfig(Dropdowns["SaveManagerConfigList"].Current[1])
-					Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
-					Dropdowns["SaveManagerConfigList"]:Set({})
-				end,
-			})
-		Config:Button({
-			Text = "LOAD",
-			Result = "LOADED",
+		:Button({
+			Text = "delete",
+			Result = "deleted",
 			Callback = function()
-				self:LoadConfig(Dropdowns["SaveManagerConfigList"].Current[1], true)
+				self:DeleteConfig(Dropdowns["savemanagerconfiglist"].Current[1])
+				Dropdowns["savemanagerconfiglist"]:Values(self:GetConfigList())
+				Dropdowns["savemanagerconfiglist"]:Set({})
 			end,
 		})
-			:Button({
-				Text = "OVERWRITE",
-				Result = "OVERWRITED",
-				Callback = function()
-					self:OverrideConfig(Dropdowns["SaveManagerConfigList"].Current[1])
-				end,
-			})
+	
 		Config:Button({
-			Text = "SAVE DEFAULT",
-			Result = "DONE",
+			Text = "load",
+			Result = "loaded",
 			Callback = function()
-				self:SaveDefault(Dropdowns["SaveManagerConfigList"].Current[1])
+				self:LoadConfig(Dropdowns["savemanagerconfiglist"].Current[1], true)
 			end,
 		})
-			:Button({
-				Text = "REMOVE DEFAULT",
-				Result = "DONE",
-				Callback = function()
-					self:RemoveDefault()
-				end,
-			})
-		Config:Button({
-			Text = "REFRESH LIST",
-			Result = "REFRESHED",
+		:Button({
+			Text = "overwrite",
+			Result = "overwrited",
 			Callback = function()
-				Dropdowns["SaveManagerConfigList"]:Values(self:GetConfigList())
-				Dropdowns["SaveManagerConfigList"]:Set({})
+				self:OverrideConfig(Dropdowns["savemanagerconfiglist"].Current[1])
+			end,
+		})
+	
+		Config:Button({
+			Text = "save default",
+			Result = "done",
+			Callback = function()
+				self:SaveDefault(Dropdowns["savemanagerconfiglist"].Current[1])
+			end,
+		})
+		:Button({
+			Text = "remove default",
+			Result = "done",
+			Callback = function()
+				self:RemoveDefault()
+			end,
+		})
+	
+		Config:Button({
+			Text = "refresh list",
+			Result = "refreshed",
+			Callback = function()
+				Dropdowns["savemanagerconfiglist"]:Values(self:GetConfigList())
+				Dropdowns["savemanagerconfiglist"]:Set({})
 			end,
 		})
 	end
 end
 
 getgenv().SaveManager = SaveManager
+
 
 return SaveManager
