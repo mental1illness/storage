@@ -1,3 +1,5 @@
+-- fixed errors
+
 local uis = game:GetService("UserInputService")
 local players = game:GetService("Players")
 local ws = game:GetService("Workspace")
@@ -522,7 +524,7 @@ function library:window(properties)
 		FontFace = library.font,
 		TextColor3 = Color3.fromRGB(170, 170, 170),
 		BorderColor3 = Color3.fromRGB(0, 0, 0),
-		Text = "ledger.live",
+		Text = cfg.name .. " | private",
 		TextStrokeTransparency = 0.5,
 		Size = UDim2.new(0, 0, 1, 0),
 		Position = UDim2.new(0, 8, 0, 0),
@@ -568,13 +570,14 @@ function library:window(properties)
 	})
 
 	library:apply_theme(glow, "accent", "ImageColor3")
+    inline1.Size = UDim2.new(0, name.TextBounds.X + 39, 0, 40)
 
 	task.spawn(function()
 		while true do
 			if __holder.Visible then
 				for i = 1, #animated_text do
 					task.wait(0.2)
-					name.Text = animated_text[i]
+					--name.Text = animated_text[i]
 				end
 			end
 			task.wait(0.2)
@@ -4586,12 +4589,12 @@ function library:colorpicker(properties)
 	end)
 
 	cfg.saved_color = hsv(h, s, v)
-	local selected = normal
+	local selected = {"normal", normal}
 	flags[cfg.flag]["animation"] = "normal"
 
 	rainbow.MouseButton1Down:Connect(function()
-		selected.BackgroundTransparency = 1
-		selected = "rainbow"
+		selected[2].BackgroundTransparency = 1
+		selected = {"rainbow", rainbow}
 		rainbow.BackgroundTransparency = 0
 
 		flags[cfg.flag]["animation"] = "rainbow"
@@ -4599,8 +4602,8 @@ function library:colorpicker(properties)
 	end)
 
 	fade_alpha.MouseButton1Down:Connect(function()
-		selected.BackgroundTransparency = 1
-		selected = "fade_alpha"
+		selected[2].BackgroundTransparency = 1
+		selected = {"fade_alpha", fade_alpha}
 		fade_alpha.BackgroundTransparency = 0
 
 		flags[cfg.flag]["animation"] = "fade_alpha"
@@ -4608,8 +4611,8 @@ function library:colorpicker(properties)
 	end)
 
 	fade.MouseButton1Down:Connect(function()
-		selected.BackgroundTransparency = 1
-		selected = "fade"
+		selected[2].BackgroundTransparency = 1
+		selected = {"fade", fade}
 		fade.BackgroundTransparency = 0
 
 		flags[cfg.flag]["animation"] = "fade"
@@ -4617,8 +4620,8 @@ function library:colorpicker(properties)
 	end)
 
 	normal.MouseButton1Down:Connect(function()
-		selected.BackgroundTransparency = 1
-		selected = "normal"
+		selected[2].BackgroundTransparency = 1
+		selected = {"normal", normal}
 		normal.BackgroundTransparency = 0
 
 		flags[cfg.flag]["animation"] = "normal"
@@ -4650,14 +4653,14 @@ function library:colorpicker(properties)
 
 	task.spawn(function()
 		while true do
-			if selected ~= "normal" then
+			if selected[1] ~= "normal" then
 				cfg.set(
 					hsv(
-						selected == "rainbow" and library.sin or h,
-						selected == "rainbow" and 1 or s,
-						selected == "fade" and library.sin or v
+						selected[1] == "rainbow" and library.sin or h,
+						selected[1] == "rainbow" and 1 or s,
+						selected[1] == "fade" and library.sin or v
 					),
-					selected == "fade_alpha" and library.sin
+					selected[1] == "fade_alpha" and library.sin
 				)
 			end
 			task.wait()
@@ -5424,5 +5427,4 @@ function library:panel(properties)
 end
 --
 --
-
 return library
