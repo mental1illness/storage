@@ -530,12 +530,12 @@ function Library:ToolTip(Options)
 end
 function Library:Panel(Options)
 	local Cfg = {
-		Name = Options.text or Options.name or "Window",
-		Size = Options.size or Dim2(0, 530, 0, 590),
-		Position = Options.position or Dim2(0, 500, 0, 500),
-		AnchorPoint = Options.anchor_point or Vec2(0, 0),
-		Image = Options.image or "rbxassetid://79856374238119",
-		Open = Options.open or true,
+		Name = Options.text or Options.name or Options.Name or "Window",
+		Size = Options.size or Options.Size or Dim2(0, 530, 0, 590),
+		Position = Options.position or Options.Position or Dim2(0, 500, 0, 500),
+		AnchorPoint = Options.anchor_point or Options.AnchorPoint or Vec2(0, 0),
+		Image = Options.image or Options.Image or "rbxassetid://79856374238119",
+		Open = Options.open or Options.Open or true,
 		Items = {},
 	}
 	local Items = Cfg.Items
@@ -783,7 +783,7 @@ function Library:FoldElements(Origin, Elements)
 end
 function Library:Watermark(Options)
 	local Cfg = {
-		Default = Options.text or Options.default or os.date("drain.lol | %b %d %Y | %H:%M")
+		Default = Options.text or Options.Text or Options.default or Options.Default or os.date("drain.lol | %b %d %Y | %H:%M")
 	}
 	local WOutline = Library:Create("Frame", {
 		Parent = Sgui,
@@ -870,8 +870,8 @@ function Library:Watermark(Options)
 end
 function Library:Notification(Properties)
 	local Cfg = {
-		Time = Properties.time or 5,
-		Text = Properties.text or Properties.name or "Notification",
+		Time = Properties.time or Properties.Time or 5,
+		Text = Properties.text or Properties.Text or Properties.Name or Properties.name or "Notification",
 	}
 	local NOutline = Library:Create("Frame", {
 		Parent = NotifHolder,
@@ -990,7 +990,7 @@ function Library:Notification(Properties)
 end
 function Library:Tab(Options)
 	local Cfg = {
-		Name = Options.name or "Tab",
+		Name = Options.name or Options.Name or "Tab",
 		Enabled = false
 	}
 	local TabHolder = Library:Create("TextButton", {
@@ -1122,7 +1122,7 @@ function Library:Column(Path)
 end
 function Library:Section(Options)
 	local Cfg = {
-		Name = Options.name or "Section"
+		Name = Options.name or Options.Name or "Section"
 	}
 	local SFrame = Library:Create("Frame", {
 		Parent = self.Holder,
@@ -1244,7 +1244,7 @@ function Library:Section(Options)
 end
 function Library:MultiSection(Options)
 	local Cfg = {
-		Names = Options.names or {
+		Names = Options.names or Options.Names or {
 			"First",
 			"Second",
 			"Third"
@@ -1436,20 +1436,20 @@ function Library:MultiSection(Options)
 end
 function Library:Slider(Options)
 	local Cfg = {
-		Name = Options.name or nil,
-		Suffix = Options.suffix or "",
-		Flag = Options.flag or tostring(2 ^ 789),
-		Callback = Options.callback or function()
+		Name = Options.name or Options.Name or nil,
+		Suffix = Options.suffix or Options.Suffix or "",
+		Flag = Options.flag or Options.Flag or tostring(2 ^ 789),
+		Callback = Options.callback or Options.Callback or function()
 		end,
-		Visible = Options.visible or true,
-		InputDisabled = Options.input or false,
-		CustomColor = Options.custom or nil,
-		Min = Options.min or Options.minimum or 0,
-		Max = Options.max or Options.maximum or 100,
-		Intervals = Options.interval or Options.decimal or 1,
-		Default = Options.default or 10,
+		Visible = Options.visible or Options.Visible or true,
+		InputDisabled = Options.input or Options.Input or false,
+		CustomColor = Options.custom or Options.Custom or nil,
+		Min = Options.min or Options.Min or Options.minimum or Options.Minimum or 0,
+		Max = Options.max or Options.Max or Options.maximum or Options.Maximum or 100,
+		Intervals = Options.interval or Options.Interval or Options.decimal or Options.Decimal or 1,
+		Default = Options.default or Options.Default or 10,
 		Dragging = false,
-		Value = Options.default or 10,
+		Value = Options.default or Options.Default or 10,
 	}
 	local SliderLabel = Library:Create("TextLabel", {
 		Parent = self.Holder,
@@ -1644,14 +1644,14 @@ function Library:Slider(Options)
 end
 function Library:Toggle(Options)
 	local Cfg = {
-		Enabled = Options.enabled or nil,
-		Name = Options.name or "Toggle",
-		Flag = Options.flag or tostring(Random(1, 9999999)),
-		Callback = Options.callback or function()
+		Enabled = Options.enabled or Options.Enabled or nil,
+		Name = Options.name or Options.Name or "Toggle",
+		Flag = Options.flag or Options.Flag or tostring(Random(1, 9999999)),
+		Callback = Options.callback or Options.Callback or function()
 		end,
-		Default = Options.default or false,
-		Visible = Options.visible or true,
-		Tooltip = Options.tooltip or nil,
+		Default = Options.default or Options.Default or false,
+		Visible = Options.visible or Options.Visible or true,
+		Tooltip = Options.tooltip or Options.Tooltip or nil,
 	}
 	local THolder = Library:Create("TextButton", {
 		Parent = self.Holder,
@@ -1823,11 +1823,11 @@ end
 function Library:Colorpicker(Options)
 	local Parent = self.RightHolder
 	local Cfg = {
-		Name = Options.name or "Color",
-		Flag = Options.flag or tostring(2 ^ 789),
-		Color = Options.color or Color(1, 1, 1),
-		Alpha = Options.alpha or 1,
-		Callback = Options.callback or function()
+		Name = Options.name or Options.Name or "Color",
+		Flag = Options.flag or Options.Flag or tostring(2 ^ 789),
+		Color = Options.color or Options.Color or Color(1, 1, 1),
+		Alpha = Options.alpha or Options.Alpha or 1,
+		Callback = Options.callback or Options.Callback or function()
 		end,
 		RightHolder = self.RightHolder,
 	}
@@ -2297,16 +2297,16 @@ end
 function Library:Keybind(Options)
 	local Parent = self.RightHolder
 	local Cfg = {
-		Flag = Options.flag or "SetMeAFlag",
-		Callback = Options.callback or function()
+		Flag = Options.flag or Options.Flag or "SetMeAFlag",
+		Callback = Options.callback or Options.Callback or function()
 		end,
 		Open = false,
 		Binding = nil,
-		Name = Options.name or nil,
-		IgnoreKey = Options.ignore or false,
-		Key = Options.key or nil,
-		Mode = Options.mode or "toggle",
-		Active = Options.default or false,
+		Name = Options.name or Options.Name or nil,
+		IgnoreKey = Options.ignore or Options.Ignore or false,
+		Key = Options.key or Options.Key or nil,
+		Mode = Options.mode or Options.Mode or "toggle",
+		Active = Options.default or Options.Default or false,
 	}
 	Flags[Cfg.Flag] = {}
 	local KbElement
@@ -2599,22 +2599,22 @@ end
 function Library:Dropdown(Options)
 	local Parent = self.Holder
 	local Cfg = {
-		Name = Options.name or nil,
-		Flag = Options.flag or tostring(Random(1, 9999999)),
-		Items = Options.items or {
+		Name = Options.name or Options.Name or nil,
+		Flag = Options.flag or Options.Flag or tostring(Random(1, 9999999)),
+		Items = Options.items or Options.Items or {
 			"1",
 			"2",
 			"3"
 		},
-		Callback = Options.callback or function()
+		Callback = Options.callback or Options.Callback or function()
 		end,
-		Multi = Options.multi or false,
-		Visible = Options.visible or true,
+		Multi = Options.multi or Options.Multi or false,
+		Visible = Options.visible or Options.Visible or true,
 		Open = false,
 		OptionInstances = {},
 		MultiItems = {},
-		Scrolling = Options.scrolling or false,
-		Ignore = Options.ignore or nil,
+		Scrolling = Options.scrolling or Options.Scrolling or false,
+		Ignore = Options.ignore or Options.Ignore or nil,
 	}
 	Cfg.Default = Options.default or (Cfg.Multi and {
 		Cfg.Items[1]
@@ -2995,18 +2995,18 @@ function Library:Dropdown(Options)
 end
 function Library:List(Options)
 	local Cfg = {
-		Callback = Options and Options.callback or function()
+		Callback = Options and (Options.callback or Options.Callback) or function()
 		end,
-		Scale = Options and Options.size or 232,
-		Items = Options and Options.items or {
+		Scale = Options and (Options.size or Options.Size) or 232,
+		Items = Options and (Options.items or Options.Items) or {
 			"1",
 			"2",
 			"3"
 		},
-		Visible = Options and Options.visible or true,
+		Visible = Options and (Options.visible or Options.Visible) or true,
 		OptionInstances = {},
 		CurrentInstance = nil,
-		Flag = Options and Options.flag or "flag",
+		Flag = Options and (Options.flag or Options.Flag) or "flag",
 	}
 	local LHolder = Library:Create("TextLabel", {
 		Parent = self.Holder,
@@ -3186,12 +3186,12 @@ function Library:List(Options)
 end
 function Library:Textbox(Options)
 	local Cfg = {
-		Placeholder = Options.placeholder or Options.placeholdertext or "type here...",
-		Default = Options.default,
-		Flag = Options.flag or "flag",
-		Callback = Options.callback or function()
+		Placeholder = Options.placeholder or Options.Placeholder or Options.placeholdertext or Options.PlaceholderText or "type here...",
+		Default = Options.default or Options.Default,
+		Flag = Options.flag or Options.Flag or "flag",
+		Callback = Options.callback or Options.Callback or function()
 		end,
-		Visible = Options.visible or true,
+		Visible = Options.visible or Options.Visible or true,
 	}
 	local TbHolder = Library:Create("TextLabel", {
 		Parent = self.Holder,
@@ -3318,8 +3318,8 @@ function Library:Textbox(Options)
 end
 function Library:ButtonHolder(Options)
 	local Cfg = {
-		Flag = Options.flag or "hi",
-		Visible = Options.visible or true
+		Flag = Options.flag or Options.Flag or "hi",
+		Visible = Options.visible or Options.Visible or true
 	}
 	local BHFrame = Library:Create("TextLabel", {
 		Parent = self.Holder,
@@ -3357,9 +3357,9 @@ function Library:ButtonHolder(Options)
 end
 function Library:Button(Options)
 	local Cfg = {
-		Callback = Options.callback or function()
+		Callback = Options.callback or Options.Callback or function()
 		end,
-		Name = Options.text or Options.name or "Button"
+		Name = Options.text or Options.Text or Options.name or Options.Name or "Button"
 	}
 	local BFrame = Library:Create("TextButton", {
 		Parent = self.CurrentHolder,
@@ -3445,7 +3445,7 @@ function Library:Button(Options)
 end
 function Library:Label(Options)
 	local Cfg = {
-		Name = Options.text or Options.name or "Label"
+		Name = Options.text or Options.Text or Options.name or Options.Name or "Label"
 	}
 	local LFrame = Library:Create("TextLabel", {
 		Parent = self.Holder,
@@ -3517,7 +3517,7 @@ function Library:Label(Options)
 end
 function Library:Playerlist(Options)
 	local Cfg = {
-		Callback = Options.callback or function()
+		Callback = Options.callback or Options.Callback or function()
 		end,
 		Labels = {
 			Name = nil,
