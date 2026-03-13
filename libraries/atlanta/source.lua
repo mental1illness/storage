@@ -2780,7 +2780,7 @@ function Library:Dropdown(Options)
 		Parent = SelectedText,
 		LineJoinMode = Enum.LineJoinMode.Miter
 	})
-	Library:Create("UIGradient", {
+	local KYS = Library:Create("UIGradient", {
 		Parent = DContrast,
 		Rotation = 90,
 		Color = RgbSeq{
@@ -2788,6 +2788,7 @@ function Library:Dropdown(Options)
 			RgbKey(1, Rgb(35, 35, 47))
 		}
 	})
+    Library:ApplyTheme(KYS, "Contrast", "Color")
 	Library:Create("UIGradient", {
 		Parent = DBg,
 		Rotation = 90,
@@ -3083,7 +3084,7 @@ function Library:List(Options)
 		BorderSizePixel = 0,
 		BackgroundColor3 = Rgb(255, 255, 255)
 	})
-	Library:Create("UIGradient", {
+	local OMGFUCKYOU = Library:Create("UIGradient", {
 		Parent = LContrast,
 		Rotation = 90,
 		Color = RgbSeq{
@@ -3091,6 +3092,7 @@ function Library:List(Options)
 			RgbKey(1, Rgb(35, 35, 47))
 		}
 	})
+    Library:ApplyTheme(OMGFUCKYOU, "Contrast", "Color")
 	local LScroll = Library:Create("ScrollingFrame", {
 		Parent = LContrast,
 		ScrollBarImageColor3 = Themes.Preset.Accent,
@@ -3606,7 +3608,7 @@ function Library:Playerlist(Options)
 		BorderSizePixel = 0,
 		BackgroundColor3 = Rgb(255, 255, 255)
 	})
-	Library:Create("UIGradient", {
+	local OMGIHATEYOU = Library:Create("UIGradient", {
 		Parent = PLContrast,
 		Rotation = 90,
 		Color = RgbSeq{
@@ -3614,6 +3616,7 @@ function Library:Playerlist(Options)
 			RgbKey(1, Rgb(35, 35, 47))
 		}
 	})
+    Library:ApplyTheme(OMGIHATEYOU, "Contrast", "Color")
 	local PLScroll = Library:Create("ScrollingFrame", {
 		Parent = PLContrast,
 		ScrollBarImageColor3 = Themes.Preset.Accent,
@@ -3915,7 +3918,7 @@ function Library:Window(Properties)
 		PaddingRight = Dim(0, 4),
 		PaddingLeft = Dim(0, 4)
 	})
-	Library:Create("UIGradient", {
+	local ThisONeAGAINNIGGAOMG = Library:Create("UIGradient", {
 		Parent = DockHolder,
 		Rotation = 90,
 		Color = RgbSeq{
@@ -3923,6 +3926,7 @@ function Library:Window(Properties)
 			RgbKey(1, Rgb(35, 35, 47))
 		}
 	})
+    Library:ApplyTheme(ThisONeAGAINNIGGAOMG, "Contrast", "Color")
 	local KbListOutline = Library:Create("Frame", {
 		Parent = Sgui,
 		Visible = false,
