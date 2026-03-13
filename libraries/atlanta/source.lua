@@ -663,6 +663,7 @@
 				-- Panel
 					items.sgui = library:create("ScreenGui", {
 						Enabled = true,
+						IgnoreGuiInset = true,
 						Parent = gethui(),
 						Name = "" 
 					})
