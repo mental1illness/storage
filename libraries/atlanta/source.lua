@@ -457,7 +457,7 @@ local TooltipSgui = Library:Create("ScreenGui", {
 	Enabled = true,
 	Parent = gethui(),
 	Name = "",
-	DisplayOrder = 999,
+	DisplayOrder = 9999999,
 })
 function Library:ToolTip(Options)
 	local Cfg = {
