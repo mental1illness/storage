@@ -4431,5 +4431,5 @@ function Library:Window(Properties)
 	})
 	return setmetatable(Window, Library)
 end
-Library:Window({})
+
 return Library, Themes
