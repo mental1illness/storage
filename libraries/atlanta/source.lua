@@ -1,6 +1,7 @@
 -- Reformatted by luamin.
 
 -- rewrote this in my coding style
+-- jsut so yk this isn't full pascalcases yet
 -- (screw you finobe.)
 
 -- made by finobe
