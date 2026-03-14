@@ -2616,7 +2616,7 @@ function Library:Dropdown(Options)
 		Scrolling = Options.scrolling or Options.Scrolling or false,
 		Ignore = Options.ignore or Options.Ignore or nil,
 	}
-	Cfg.Default = Options.default or (Cfg.Multi and {
+	Cfg.Default = Options.default or Options.Default or (Cfg.Multi and {
 		Cfg.Items[1]
 	}) or Cfg.Items[1] or nil
 	local DLabel = Library:Create("TextLabel", {
