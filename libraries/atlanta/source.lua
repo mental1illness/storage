@@ -1432,7 +1432,7 @@ function Library:MultiSection(Options)
 		Cfg.Sections[#Cfg.Sections + 1] = setmetatable(Multi, Library)
 	end
 	Cfg.Sections[1]:OpenTab(true)
-	return unpack(Cfg.Sections)
+	return Cfg.Sections
 end
 function Library:Slider(Options)
 	local Cfg = {
